@@ -8,6 +8,7 @@ h1{
     position: absolute;
     left: 10px;
     top: 10px;
+    visibility: hidden;
 }
 
 .relation{
@@ -32,6 +33,10 @@ h1{
 @media (min-width: 1001px) {
     .item {
         width: 30%;
+    }
+
+    .img-header{
+        visibility: visible;
     }
 }
 
