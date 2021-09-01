@@ -19,7 +19,12 @@ const (
 var client http.Client
 
 // パフォーマンス改善、GitHub API のレートリミット対策としてキャッシュ
-var stars map[string]int64
+type SafeStars struct {
+	mu sync.Mutex
+	v  map[string]int64
+}
+
+var stars SafeStars
 
 type LandScape struct {
 	Landscape []struct {
@@ -140,7 +145,7 @@ func getStarCount(repoUrl string) int64 {
 		return 0
 	}
 
-	if v, ok := stars[repoUrl]; ok {
+	if v, ok := stars.v[repoUrl]; ok {
 		return v
 	}
 
@@ -161,7 +166,9 @@ func getStarCount(repoUrl string) int64 {
 
 	if resp.StatusCode == http.StatusOK {
 		c := gjson.GetBytes(b, "stargazers_count").Int()
-		stars[repoUrl] = c
+		stars.mu.Lock()
+		stars.v[repoUrl] = c
+		stars.mu.Unlock()
 		return c
 	} else {
 		fmt.Println(string(b))

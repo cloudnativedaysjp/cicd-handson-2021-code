@@ -12,7 +12,7 @@ type HealthCheck struct {
 }
 
 func init() {
-	stars = make(map[string]int64)
+	stars = SafeStars{v: make(map[string]int64)}
 }
 
 func main() {

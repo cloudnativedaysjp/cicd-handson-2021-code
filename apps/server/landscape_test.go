@@ -9,8 +9,8 @@ import (
 )
 
 func init() {
-	stars = make(map[string]int64)
-	stars["https://github.com/argoproj/argo-workflows"] = 5000
+	stars = SafeStars{v: make(map[string]int64)}
+	stars.v["https://github.com/argoproj/argo-workflows"] = 5000
 }
 
 func Test_parseFile(t *testing.T) {
