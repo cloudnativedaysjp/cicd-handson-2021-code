@@ -30,6 +30,16 @@ jobs:
         with:
           image: docker.pkg.github.com/${{ github.repository }}/go-image:${{ github.run_number }}
 
+        # Trivyによるイメージスキャン
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'docker.pkg.github.com/${{ github.repository }}/go-image:${{ github.run_number }}'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
+
         # イメージをプッシュする為の「docker login」
       - name: GitHub Packages login
         uses: docker/login-action@v1
