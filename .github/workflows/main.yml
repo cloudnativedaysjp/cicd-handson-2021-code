@@ -24,6 +24,12 @@ jobs:
         run: |
           DOCKER_BUILDKIT=1 docker image build apps/ -t docker.pkg.github.com/${{ github.repository }}/go-image:${{ github.run_number }}
 
+        # dockleによるイメージ診断
+      - name: Run dockle
+        uses: hands-lab/dockle-action@v1
+        with:
+          image: docker.pkg.github.com/${{ github.repository }}/go-image:${{ github.run_number }}
+
         # イメージをプッシュする為の「docker login」
       - name: GitHub Packages login
         uses: docker/login-action@v1
