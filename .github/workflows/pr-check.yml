@@ -1,0 +1,20 @@
+name: Pull Request Check
+
+# mainブランチへのプルリクエスト時にトリガー
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  check:
+    name: Application test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+        # アプリケーションテスト
+      - name: Application test
+        run: |
+          cd apps
+          make run-test
