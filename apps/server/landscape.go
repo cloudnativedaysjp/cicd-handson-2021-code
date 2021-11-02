@@ -102,7 +102,7 @@ func findCicdProjects(data []byte) ([]Project, error) {
 								HomepageUrl: proj.HomepageUrl,
 								Project:     getProject(proj.Project, proj.Crunchbase, ml),
 								RepoUrl:     proj.RepoUrl,
-								Crunchbase:  proj.Twitter,
+								Crunchbase:  proj.Crunchbase,
 								StarCount:   getStarCount(proj.RepoUrl),
 							}
 						}(i, proj)
